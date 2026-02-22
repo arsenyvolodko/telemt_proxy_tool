@@ -1,0 +1,32 @@
+[general]
+prefer_ipv6 = false
+fast_mode = true
+use_middle_proxy = false
+
+[general.links]
+public_host = "178.20.42.102"
+public_port = 443
+
+[general.modes]
+classic = false
+secure = false
+tls = true
+
+[server]
+port = 443
+listen_addr_ipv4 = "0.0.0.0"
+listen_addr_ipv6 = "::"
+
+[censorship]
+tls_domain = "petrovich.ru"
+mask = true
+mask_port = 443
+fake_cert_len = 2048
+
+[access.users]
+
+user2 = "112"
+[[upstreams]]
+type = "direct"
+enabled = true
+weight = 10

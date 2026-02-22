@@ -1,0 +1,114 @@
+openapi: 3.0.1
+info:
+  title: Telemt Proxy Tool
+  version: '1.0'
+servers:
+  - description: russia
+    url: http://85.198.109.71:8080
+  - description: netherlands
+    url: http://77.238.236.90:8080
+  - description: localhost
+    url: http://127.0.0.1:8080
+paths:
+  /api/v1/proxy-client/:
+    parameters:
+      - name: x-api-key
+        in: header
+        description: API Key for authentication
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Add proxy-client
+      tags:
+        - proxy-client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientProxyRequest'
+      responses:
+        201:
+          description: Created
+    delete:
+      summary: Delete proxy-client
+      tags:
+        - proxy-client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientRemoveRequest'
+      responses:
+        204:
+          description: No content
+
+  /api/v1/proxy-clients/:
+    parameters:
+      - name: x-api-key
+        in: header
+        description: API Key for authentication
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Add proxy clients
+      tags:
+        - proxy-clients
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientsProxyRequest'
+      responses:
+        201:
+          description: Created
+    delete:
+      summary: Delete proxy clients
+      tags:
+        - proxy-clients
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveClientsRequest'
+      responses:
+        204:
+          description: No content
+
+components:
+  schemas:
+    ClientProxyRequest:
+      required:
+        - telegram_id
+        - secret
+      properties:
+        telegram_id:
+          type: string
+          description: Идентификатор пользователя (ключ в [access.users])
+        secret:
+          type: string
+          description: Секрет прокси
+    ClientsProxyRequest:
+      required:
+        - clients
+      properties:
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientProxyRequest'
+    ClientRemoveRequest:
+      required:
+        - telegram_id
+      properties:
+        telegram_id:
+          type: string
+          description: Идентификатор пользователя для удаления
+    RemoveClientsRequest:
+      required:
+        - clients
+      properties:
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientRemoveRequest'
